@@ -28,3 +28,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer utilities {
+  .section_wrapper {
+    @apply flex w-full flex-col px-8 py-8 sm:px-4;
+  }
+
+  .flex-center {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  .header {
+    @apply font-grotesk max-w-prose text-xl font-extrabold text-neutral-50 sm:text-2xl;
+  }
+}
