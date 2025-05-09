@@ -1,6 +1,6 @@
 import Header from "@/shared/layout/header";
 
-export default function Home() {
+const Home = () => {
   return (
     <section className="section_wrapper">
       <Header>
@@ -8,4 +8,6 @@ export default function Home() {
       </Header>
     </section>
   );
-}
+};
+
+export default Home;
