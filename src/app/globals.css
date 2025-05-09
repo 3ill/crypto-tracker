@@ -14,6 +14,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-grotesk: "Space Grotesk", sans-serif;
+  --font-bebas: var(--bebas-neue);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,6 +37,14 @@ body {
 
   .flex-center {
     @apply flex flex-col items-center justify-center;
+  }
+
+  .flex-row-center {
+    @apply flex flex-row items-center justify-center;
+  }
+
+  .flex-between-center {
+    @apply flex flex-row items-center justify-between;
   }
 
   .header {
