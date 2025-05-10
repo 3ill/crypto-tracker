@@ -9,7 +9,7 @@ export interface IHttpClientOptions {
 }
 
 export interface IRequest {
-  url: string;
+  path: string;
   body?: unknown;
   headers?: Record<string, string>;
   method: THttpMethod;
