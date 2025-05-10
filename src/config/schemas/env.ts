@@ -10,4 +10,4 @@ const envSchema = z.object({
   }),
 });
 
-export const env = envSchema.parse(EnvConfig.env.coingecko.API_KEY);
+export const env = envSchema.parse(EnvConfig.env);
