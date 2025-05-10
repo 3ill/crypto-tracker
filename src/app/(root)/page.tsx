@@ -14,8 +14,8 @@ const Home = () => {
         </p>
       </div>
 
-      <div className="flex flex-col justify-center">
-        <div className="mt-[50px] grid grid-cols-1 gap-y-16 px-4 sm:grid-cols-2 sm:px-12 md:grid-cols-3 md:px-16">
+      <div className="flex w-full flex-col justify-center">
+        <div className="mt-[50px] grid grid-cols-1 gap-y-16 pl-4 sm:grid-cols-2 sm:pl-12 md:grid-cols-3 lg:pl-[80px]">
           <CryptoCard />
           <CryptoCard />
           <CryptoCard />
