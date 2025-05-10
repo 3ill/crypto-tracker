@@ -32,7 +32,7 @@ body {
 
 @layer utilities {
   .section_wrapper {
-    @apply flex w-full flex-col px-8 py-8 sm:px-4;
+    @apply flex w-full flex-col px-12 py-8 sm:px-8;
   }
 
   .flex-center {
@@ -44,10 +44,18 @@ body {
   }
 
   .flex-between-center {
-    @apply flex flex-row items-center justify-between;
+    @apply flex w-full flex-row items-center justify-between;
   }
 
   .header {
-    @apply font-grotesk max-w-prose text-xl font-extrabold text-neutral-50 sm:text-2xl;
+    @apply font-grotesk max-w-prose text-xl font-extrabold text-neutral-50 sm:text-4xl;
+  }
+
+  .center-items {
+    @apply flex flex-row items-center;
+  }
+
+  .crypto_card_container {
+    @apply flex h-[250px] w-[250px] flex-col rounded-[15px] bg-neutral-700 opacity-50 shadow-md backdrop-blur-2xl duration-300 hover:scale-100 active:scale-95 md:h-[300px] md:w-[300px];
   }
 }
