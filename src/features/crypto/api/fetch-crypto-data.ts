@@ -1,10 +1,10 @@
 import { env } from "@/config/schemas/env";
 import { HttpClient } from "@/lib/http-client";
-import {
-  CryptoPriceList,
-  CryptoPriceListSchema,
-} from "../schemas/crypto-price.schema";
 import { MARKET_PATH } from "@/constants/constant";
+import {
+  CryptoDataList,
+  CryptoDataListSchema,
+} from "../schemas/crypto-data.schema";
 
 const client = new HttpClient({
   baseUrl: env.coingecko.BASE_URL,
@@ -17,10 +17,10 @@ const client = new HttpClient({
   logRequests: true,
 });
 
-export const fetchCryptoPrices = async (): Promise<CryptoPriceList> => {
+export const fetchCryptoData = async (): Promise<CryptoDataList> => {
   const data = await client.get<unknown>({
     path: MARKET_PATH,
   });
 
-  return CryptoPriceListSchema.parse(data);
+  return CryptoDataListSchema.parse(data);
 };
