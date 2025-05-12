@@ -56,6 +56,6 @@ body {
   }
 
   .crypto_card_container {
-    @apply flex h-[250px] w-[250px] flex-col rounded-[15px] bg-neutral-700 opacity-50 shadow-md backdrop-blur-2xl duration-300 hover:scale-100 active:scale-95 md:h-[300px] md:w-[300px];
+    @apply flex h-fit w-[250px] flex-col rounded-[15px] bg-neutral-700 opacity-90 shadow-md backdrop-blur-2xl duration-300 hover:scale-100 active:scale-95 md:h-[300px] md:w-[300px];
   }
 }
