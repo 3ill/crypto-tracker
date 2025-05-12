@@ -27,9 +27,9 @@ This project implements a **Domain-Based Structure** .
         crypto-card.tsx
         crypto-search.tsx
       /api
-        crypto-data
+        /crypto-data
           route.ts
-        search
+        /search
           route.ts
       /hooks
         use-crypto-data.ts
@@ -37,16 +37,21 @@ This project implements a **Domain-Based Structure** .
       /types
         index.ts
       /utils
-        formatPriceChange.ts
       index.ts
   /shared
     /components
     /ui
     /layout
   /app
-    /page.tsx
+    /(root)
+      layout.tsx
+      page.tsx
+    /fonts
     /globals.css
   /lib
+    /types
+    http-client.ts
+    react-query.ts
     react-query-client.ts
   /constants
     constants.ts
