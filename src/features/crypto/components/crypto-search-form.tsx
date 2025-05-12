@@ -9,27 +9,12 @@ import {
   FormField,
   FormItem,
   FormMessage,
-  FormLabel,
 } from "@/shared/ui/form";
 import { Button } from "@/shared/ui/button";
 import { useCryptoSearch } from "../hooks/use-crypto-search";
+import { SortFieldValue, SortOrderValue } from "../types";
+import { SORT_FIELD, SORT_ORDER } from "@/constants/constant";
 
-// Define sort options
-const SORT_FIELD = {
-  NAME: "name",
-  RANK: "market_cap_rank",
-} as const;
-
-const SORT_ORDER = {
-  ASC: "asc",
-  DESC: "desc",
-} as const;
-
-// Define types
-type SortFieldValue = (typeof SORT_FIELD)[keyof typeof SORT_FIELD];
-type SortOrderValue = (typeof SORT_ORDER)[keyof typeof SORT_ORDER];
-
-// Form values type
 interface FormValues {
   query: string;
   sortField: SortFieldValue;
@@ -45,7 +30,6 @@ const CryptoSearchForm = ({ onSelectCrypto }: CryptoSearchFormProps) => {
   const [showResults, setShowResults] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
 
-  // Initialize form with explicit types
   const form = useForm<FormValues>({
     defaultValues: {
       query: "",
@@ -58,7 +42,6 @@ const CryptoSearchForm = ({ onSelectCrypto }: CryptoSearchFormProps) => {
   const sortField = form.watch("sortField");
   const sortOrder = form.watch("sortOrder");
 
-  // Debounce search input
   useEffect(() => {
     const timer = setTimeout(() => {
       if (query) {
@@ -122,7 +105,6 @@ const CryptoSearchForm = ({ onSelectCrypto }: CryptoSearchFormProps) => {
       })
     : [];
 
-  // Handler for sort option changes
   const handleSortChange = (
     type: "field" | "order",
     value: SortFieldValue | SortOrderValue,
@@ -193,7 +175,7 @@ const CryptoSearchForm = ({ onSelectCrypto }: CryptoSearchFormProps) => {
             )}
           />
 
-          {/* Sort Controls - Only show when there are results */}
+          {/* Sort Controls */}
           {showResults && sortedResults && sortedResults.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-4 rounded-lg bg-neutral-900 p-2">
               <div className="flex items-center gap-2">
