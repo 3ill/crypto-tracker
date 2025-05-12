@@ -1,31 +1,39 @@
 import { CryptoCard } from "@/features/crypto";
+import { fetchCryptoData } from "@/features/crypto/api/crypto-data/route";
+import { CRYPTO_DATA_QUERY_KEY } from "@/features/crypto/hooks/use-crypto-data";
+import { queryClient } from "@/lib/react-query";
 import Header from "@/shared/layout/header";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-const Home = () => {
-  return (
-    <section className="section_wrapper">
-      <div className="flex-center gap-2">
-        <Header>
-          <h1>Live Feed</h1>
-        </Header>
-        <p className="font-grotesk max-w-prose text-center text-sm font-light">
-          Monitor your favorite cryptocurrencies in real-time. Click on a coin
-          to view insights.
-        </p>
-      </div>
+const Home = async () => {
+  try {
+    await queryClient.prefetchQuery({
+      queryKey: CRYPTO_DATA_QUERY_KEY,
+      queryFn: fetchCryptoData,
+    });
 
-      <div className="flex w-full flex-col justify-center">
-        <div className="mt-[50px] grid grid-cols-1 gap-y-16 pl-4 sm:grid-cols-2 sm:pl-12 md:grid-cols-3 lg:pl-[80px]">
-          <CryptoCard />
-          <CryptoCard />
-          <CryptoCard />
-          <CryptoCard />
-          <CryptoCard />
-          <CryptoCard />
+    return (
+      <section className="section_wrapper">
+        <div className="flex-center gap-2">
+          <Header>
+            <h1>Live Feed</h1>
+          </Header>
+          <p className="font-grotesk max-w-prose text-center text-sm font-light">
+            Monitor your favorite cryptocurrencies in real-time. Click on a coin
+            to view insights.
+          </p>
         </div>
-      </div>
-    </section>
-  );
+
+        <div className="flex w-full flex-col justify-center">
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            <CryptoCard />
+          </HydrationBoundary>
+        </div>
+      </section>
+    );
+  } catch (error) {
+    return <p>Failed to load crypto prices: {(error as Error).message}</p>;
+  }
 };
 
 export default Home;
