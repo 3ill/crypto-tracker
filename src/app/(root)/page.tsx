@@ -1,4 +1,4 @@
-import { CryptoCard } from "@/features/crypto";
+import { CryptoCard, CryptoSearchForm } from "@/features/crypto";
 import { fetchCryptoData } from "@/features/crypto/api/crypto-data/route";
 import { CRYPTO_DATA_QUERY_KEY } from "@/features/crypto/hooks/use-crypto-data";
 import { queryClient } from "@/lib/react-query";
@@ -15,9 +15,13 @@ const Home = async () => {
     return (
       <section className="section_wrapper">
         <div className="flex-center gap-2">
-          <Header>
-            <h1>Live Feed</h1>
-          </Header>
+          <CryptoSearchForm />
+
+          <div className="mt-[50px] flex w-full flex-col items-center justify-center">
+            <Header>
+              <h1>Live Feed</h1>
+            </Header>
+          </div>
           <p className="font-grotesk max-w-prose text-center text-sm font-light">
             Monitor your favorite cryptocurrencies in real-time. Click on a coin
             to view insights.
