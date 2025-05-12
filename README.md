@@ -1,10 +1,70 @@
 # Welcome to Crypto Tracker
 Crypto tracker is a light weight web application to get real time notifications on crypto currencies
 
+---
+
+## 📚 Table of Contents
+
+- [✅ Tech Stack](#-tech-stack)
+
+- [⚙ Setup Instructions](#-setup-instructions)
+
+- [🤔 Project Structure](#-project-structure)
+
+- [🛠️ Configuration](#configuration)
+
+    - [Key Benefits](#key-benefits)
+
+- [🔗 Standardized HTTP Client](#standardized-http-client)
+
+    - [Benefits](#benefits)
+
+- [📦 Data Fetching and Hydration](#data-fetching-and-hydration)
+
+    - [Server-side Prefetching](#server-side-prefetching)
+
+- [📈 Scaling for 100+ Coins](#-scaling-for-100-coins)
+
+    - [✅ Use TanStack Virtualization](#-use-tanstack-virtualization)
+
+    - [🧠 Tips for Scaling Further](#-tips-for-scaling-further)
+
+    - [♻ General Scaling Principles](#-general-scaling-principles)
+
+- [🔍 Dynamic Search with Sorting](#-dynamic-search-with-sorting)
+
+    - [Type-Safe Implementation](#type-safe-implementation)
+
+    - [React Hook Form Integration](#react-hook-form-integration)
+
+    - [Optimized Search with Debouncing](#optimized-search-with-debouncing)
+
+    - [Client-Side Sorting](#client-side-sorting)
+
+    - [Advanced Event Handling](#advanced-event-handling)
+
+    - [Benefits of This Approach](#benefits-of-this-approach)
+
+---
+
+## ✅ Tech Stack
+
+- **Next.js App Router**
+
+- **TypeScript**
+
+- **Tailwind CSS**
+
+- **Zod**
+
+- **React Query**
+
+- **CoinGecko API**
+
 ## ⚙ Setup Instructions
 #### Step 1: Clone Repo
 ```Shell
-git clone
+git clone https://github.com/3ill/crypto-tracker
 ```
 
 #### Step 2: Install Dependencies
@@ -66,7 +126,7 @@ This approach is useful for keeping related functionality in one place, making i
 ___
 
 ## Configuration
-Configuration is an important piece of this project, the config setup leverages `zod`ensuring that critical configuration values are present and properly formatted before the application runs, preventing potential runtime errors and security issues.
+The configuration layer uses `zod` to validate environment variables, ensuring that required fields are present and correctly formatted before the application runs. This prevents runtime issues and enforces consistency.
 
 ```Typescript
 export const EnvConfig = {
@@ -103,47 +163,45 @@ export const env = envSchema.parse(EnvConfig.env);
 
 ```
 
-## Key Benefits of this configuration pattern
+## Key Benefits
 
-### 1. Fail-Fast Approach
+#### 1. Fail-Fast Approach
 
-By validating environment variables early in the application lifecycle, we ensure that configuration errors are caught immediately rather than causing subtle runtime issues:
+- Catches missing or malformed configuration early.
 
-- **Early Error Detection**: Problems are identified during application startup
-- **Clear Error Messages**: Zod provides detailed error messages about which validations failed
-- **Prevents Partial Operation**: The application won't run with incomplete configuration
+- Zod provides clear, readable validation errors.
 
-### 2. Type Safety and Intellisense Support
+- Prevents partially configured apps from running.
 
-Our configuration system provides:
 
-- **TypeScript Integration**: Full type information about available configuration values
-- **IDE Autocompletion**: Developers get intellisense support for configuration options
-- **Confidence in Usage**: Eliminates uncertainty about the structure of configuration objects
+#### 2. Type Safety and Intellisense Support
 
-### 3. Centralized Configuration Management
+- Full TypeScript types for all configuration values.
 
-- **Single Source of Truth**: All configuration definitions in one location
-- **Consistent Access Pattern**: Standardized way to access configuration values
-- **Easy Maintenance**: Configuration changes happen in one place
+- Developers benefit from IDE autocompletion.
 
-### 4. Enhanced Security
+- Safer usage throughout the app.
 
-- **Prevents Missing Credentials**: Required API keys must be present
-- **Format Validation**: Ensures URLs and other formatted strings are valid
-- **Controlled Defaults**: Sensible fallbacks where appropriate
+
+#### 3. Centralized Configuration Management
+
+- One source of truth for configuration.
+
+- Easy updates and consistent access patterns.
+
+
+#### 4. Enhanced Security
+
+- Enforces required keys and formats.
+
+- Avoids accidental exposure or omissions.
+
+- Validates external URLs and headers.
 ___
 
 ## Standardized HTTP client
-This  app utilizes a `HttpClient` class, which is a robust and flexible wrapper around the native Fetch API, designed to standardize and enhance HTTP communication in the Crypto Tracker application.
+The HTTP client is a wrapper around the Fetch API that adds retries, timeouts, logging, and consistent headers.
 
-This custom implementation provides numerous advantages over direct Fetch API usage, including built-in error handling, retries, timeouts, and consistent request configuration.
-
-Benefits of This Approach
-
-### 1. Centralized API Configuration
-
-Our HTTP client provides a single point of configuration for all API interactions:
 
 ```Typescript
 const client = new HttpClient({
@@ -158,81 +216,67 @@ const client = new HttpClient({
 });
 ```
 
-**Benefits:**
-- **Consistent Configuration**: All requests to a particular API use the same base settings
-- **DRY Principle**: Eliminates repetition of configuration across API calls
-- **Single Point of Change**: Modify API interaction patterns in one place
+### Benefits
 
-### 2. Enhanced Reliability
+#### 1. Centralized API Configuration
 
-The built-in retry mechanism with exponential backoff significantly improves application resilience:
+- Ensures consistent settings across all requests.
 
-**Benefits:**
-- **Handles Transient Failures**: Automatically recovers from temporary network issues
-- **Intelligent Backoff**: Increasing delays between retries prevent overwhelming services
-- **Configurable Attempts**: Adjust retry counts based on service importance and stability
+- DRY — no duplicated configuration code.
 
-### 3. Improved Developer Experience
+- Single point of change for headers, timeouts, etc.
 
-The client interface simplifies API interactions and reduces boilerplate:
 
-```Typescript
-export const fetchCryptoData = async () => {
-  const data = await client.get<unknown>({
-    path: MARKET_PATH,
-  });
+#### 2. Enhanced Reliability
 
-  return data;
-};
-```
+- Retry logic with exponential backoff.
 
-**Benefits:**
-- **Clean API Surface**: Simplified method calls reduce cognitive load
-- **Type Safety**: Generic type parameters ensure correct typing of responses
-- **Reduced Boilerplate**: Common request configurations are abstracted away
+- Handles network flakiness gracefully.
 
-### 4. Better Error Handling
 
-The standardized error handling approach provides consistent error information:
+#### 3. Improved Developer Experience
 
-**Benefits:**
-- **Detailed Error Information**: Captures both status codes and error response bodies
-- **Consistent Error Format**: Standardized error structure throughout the application
-- **Error Traceability**: Easier to track the source and nature of API failures
+- Clean, minimal method signatures.
 
-### 5. Performance Optimization
+- Type-safe API responses using generics.
 
-Automatic timeouts prevent requests from hanging indefinitely:
 
-**Benefits:**
-- **Prevents Hung Requests**: No requests left in pending state indefinitely
-- **Resource Efficiency**: Frees up connections that would otherwise remain open
-- **Improved User Experience**: Faster failure notification instead of indefinite loading
+#### 4. Better Error Handling
 
-### 6. Simplified Testing
+- Standard error formats across the app.
 
-The abstraction layer makes it easier to mock API calls in tests:
+- Easier debugging with consistent error messages.
 
-**Benefits:**
-- **Mock-Friendly Design**: Class-based approach is easier to mock than direct fetch calls
-- **Testable Units**: API logic can be tested separately from HTTP implementation
-- **Controlled Test Environment**: Simulate various response scenarios without real API calls
+
+#### 5. Performance Optimization
+
+- Built-in timeouts avoid hanging requests.
+
+- Responsive UIs through fast failure feedback.
+
+
+#### 6. Simplified Testing
+
+- Easy to mock and test independently from business logic.
+
+- Simulate different API responses cleanly
 ___
 
 ## Data Fetching and Hydration
-Our data fetching architecture combines the best of server-side rendering with client-side state management to create a seamless user experience. By prefetching data on the server and hydrating it to the client, we eliminate initial loading states while maintaining the benefits of React Query's caching, refetching, and state management.
 
-This approach ensures that users see content immediately upon page load, with type-safe data that automatically refreshes in the background. The result is a performant, SEO-friendly application with a consistent and reliable user experience, even in the face of network variability or API inconsistencies.
+The application uses **server-side prefetching** and **React Query hydration** to provide a fast, cached, and resilient user experience.
 
-### Architecture
+### Architecture Layers
 
-The data fetching architecture follows a layered approach:
+1. **HTTP Client Layer**: Handles network calls.
 
-1. **HTTP Client Layer**: Base communication with external APIs
-2. **API Routes Layer**: Server-side endpoints that abstract API communication
-3. **React Query Layer**: Client-side data fetching with caching and revalidation
-4. **Server Hydration Layer**: Pre-fetches data during server-side rendering
-5. **Component Layer**: Consumes hydrated data with fallback states
+2. **API Routes Layer**: Proxies and sanitizes external APIs.
+
+3. **React Query Layer**: Manages caching, refetching, and hydration.
+
+4. **Server Hydration Layer**: Prefetches data for SSR pages.
+
+5. **Component Layer**: Displays data, handles fallback and error states.
 
 ### Server-side Prefetching
 ```Typescript
@@ -270,9 +314,80 @@ const Home = async () => {
 export default Home;
 
 ```
+
+## 📈 **Scaling for 100+ Coins**
+
+To render hundreds of coins efficiently:
+
+### ✅ Use TanStack Virtualization
+
+**Why:** Rendering all coin cards at once becomes a performance bottleneck as the list grows.
+
+**How:**
+
+```Typescript
+import { useVirtualizer } from '@tanstack/react-virtual';
+
+const parentRef = useRef(null);
+const rowVirtualizer = useVirtualizer({
+  count: coins.length,
+  getScrollElement: () => parentRef.current,
+  estimateSize: () => 80, // Estimated height of each row
+});
+
+return (
+  <div ref={parentRef} className="overflow-auto h-[600px]">
+    <div style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: 'relative' }}>
+      {rowVirtualizer.getVirtualItems().map(virtualRow => {
+        const coin = coins[virtualRow.index];
+        return (
+          <div
+            key={coin.id}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              transform: `translateY(${virtualRow.start}px)`,
+              height: `${virtualRow.size}px`,
+              width: '100%',
+            }}
+          >
+            <CryptoCard {...coin} />
+          </div>
+        );
+      })}
+    </div>
+  </div>
+);
+
+```
+
+### 🧠 Tips for Scaling Further
+
+- **Pagination or Infinite Scroll**: Use paginated endpoints or `useInfiniteQuery` to fetch data in chunks.
+
+- **Lazy Image Loading**: Only load images that are in the viewport to reduce bandwidth.
+
+- **Debounced Filtering**: When filtering 100+ coins, debounce the filter input.
+
+- **Memoization**: Use `React.memo` for coin cards to prevent unnecessary re-renders.
+
+- **Background Refetching**: Set up automatic background refresh intervals via React Query.
+
+
+### ♻ General Scaling Principles
+
+- Break large components into smaller, testable parts.
+
+- Use suspense boundaries at domain or route levels.
+
+- Hydrate only essential data on the server; defer the rest to the client.
+
+- Minimize prop drilling by colocating state near the consuming component.
 ___
 
-## Dynamic Search with Sorting
+
+## 🔍 Dynamic Search with Sorting
 The application implements a robust cryptocurrency search feature with dynamic sorting capabilities. This search functionality provides a responsive and type-safe interface for finding and organizing cryptocurrency data.
 
 ### Type-Safe Implementation
