@@ -13,9 +13,13 @@ const client = new HttpClient({
   logRequests: true,
 });
 
-export const search = async () => {
+export const searchCryptoData = async (query: string) => {
+  if (!query || query.trim() === "") {
+    return { coins: [] };
+  }
+
   const data = await client.get<unknown>({
-    path: SEARCH_PATH,
+    path: `${SEARCH_PATH}${encodeURIComponent(query)}`,
   });
 
   return data;
