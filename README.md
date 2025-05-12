@@ -289,16 +289,6 @@ const Home = async () => {
 
     return (
       <section className="section_wrapper">
-        <div className="flex-center gap-2">
-          <Header>
-            <h1>Live Feed</h1>
-          </Header>
-          <p className="font-grotesk max-w-prose text-center text-sm font-light">
-            Monitor your favorite cryptocurrencies in real-time. Click on a coin
-            to view insights.
-          </p>
-        </div>
-
         <div className="flex w-full flex-col justify-center">
           <HydrationBoundary state={dehydrate(queryClient)}>
             <CryptoCard />
