@@ -1,5 +1,5 @@
 # Welcome to Crypto Tracker
-Crypto tracker is a light weight web application to get real time notifications on crypto currencies
+Crypto tracker is a light weight web application to get real time notifications on cryptocurrencies.
 
 ---
 
