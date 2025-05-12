@@ -23,8 +23,7 @@ const Home = async () => {
             </Header>
           </div>
           <p className="font-grotesk max-w-prose text-center text-sm font-light">
-            Monitor your favorite cryptocurrencies in real-time. Click on a coin
-            to view insights.
+            Monitor your favorite cryptocurrencies in real-time.
           </p>
         </div>
 
